@@ -1,79 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>我的导航键盘</title>
   <link rel="stylesheet" href="style.css">
-  
+
 </head>
+
 <body>
   <header></header>
   <main>
-   <div class="wrapper" id="mainxxx"></div>
-  
-  
+    <div class="wrapper" id="mainxxx"></div>
+
+
 
   </main>
   <footer></footer>
   <script>
+
+    //1.初始化数据
     var keys = {
-      '0':['q','w','e','r','t','y','u','i','o','p'],
-      '1':['a','s','d','f','g','h','j','k','l'],
-      '2':['z','x','c','v','b','n','m'],
-      'length':3
+      '0': ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+      '1': ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+      '2': ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
+      'length': 3
     }
     var hash = {
-      'q': 'qq.com', 
-      'w': 'weibo.com', 
-      'e': 'ele.me', 
-      'r': 'renren.com', 
-      't': 'tianya.com', 
+      'q': 'qq.com',
+      'w': 'weibo.com',
+      'e': 'ele.me',
+      'r': 'renren.com',
+      't': 'tianya.com',
       'y': 'youtube.com',
-      'u': 'uc.com' ,
+      'u': 'uc.com',
       'i': 'iqiyi.com',
-      'o': 'opera.com', 
-      'p': undefined, 
+      'o': 'opera.com',
+      'p': undefined,
       'a': 'acfun.tv',
-      's': 'sohu.com', 
+      's': 'sohu.com',
       'z': 'zhihu.com',
       'm': 'www.mcdonalds.com.cn'
     }
-    var hashInLocalStorage=JSON.parse(localStorage.getItem('zzz')||'null')
-    if(hashInLocalStorage){
-      hash=hashInLocalStorage
+    //取出localStorage 中的zzz 对应的 hash
+    var hashInLocalStorage = getFromLocalStorage('zzz')
+    if (hashInLocalStorage) {
+      hash = hashInLocalStorage
     }
-    var index=0
-    while(index<keys['length']){
-      divxxx=document.createElement('div')
+
+    //2.生成键盘
+    //便利 keys，生成kbd 标签
+    for (var index = 0; index < keys['length']; index = index + 1) {
+      var divxxx = tag('div')
+      // divxxx.className = 'row'
       mainxxx.appendChild(divxxx)
-      row=keys[index]
-      index2=0
-      while(index2<row['length']){
-        kbdxxx=document.createElement('kbd')
-        kbdxxx.textContent=row[index2]
-        buttonxxx=document.createElement('button')
-        buttonxxx.textContent='编辑'
-        buttonxxx.id=row[index2]
-        buttonxxx.onclick=function(xxxxxx){
-          key=xxxxxx['target']['id']
-          x=prompt('给我一个网址')
-          hash[key]=x
-        localStorage.setItem('zzz',JSON.stringify(hash))
-        }
+
+      var row = keys[index]
+      for (var index2 = 0; index2 < row['length']; index2 = index2 + 1) {
+        var kbdxxx = xx(row[index2])
+
+        var buttonxxx = creatButton(row[index2])
+
+        var imgxxx = creatImg(hash[row[index2]])
+        kbdxxx.appendChild(imgxxx)
         kbdxxx.appendChild(buttonxxx)
         divxxx.appendChild(kbdxxx)
-      index2=index2 +1
+
       }
-    index = index +1
+
     }
-    document.onkeypress=function(xxxxxx){
-      key=xxxxxx['key']
-      website=hash[key]
-      window.open('http://'+website)
+    //3.全局的键盘监听
+    document.onkeypress = function (xxxxxx) {
+      var key = xxxxxx['key']
+      var website = hash[key]
+      window.open('http://' + website)
     }
-    
-    </script>
+    function getFromLocalStorage(name) {
+      return JSON.parse(localStorage.getItem(name) || 'null')
+
+    }
+    function tag(tagName) {
+      return document.createElement(tagName)
+    }
+    function creatButton(id) {
+      var buttonxxx = tag('button')
+      buttonxxx.textContent = '编辑'
+      buttonxxx.id = id
+      buttonxxx.onclick = function (xxxxxx) {
+        // key=xxxxxx['target']['id']
+        //xxxxxx['target']用户点击的元素
+        var button2 = xxxxxx['target']//声明用户点击的元素button2
+        var img2 = button2.previousSibling//声明img2是button2的上一个元素
+        var key = button2['id']//拿到用户点击的元素
+        var x = prompt('给我一个网址')
+        hash[key] = x //hash 变更
+        img2.src = 'http://' + x + '/favicon.ico'
+        img2.onerror = function (yyyyyy) {
+          yyyyyy.target.src = '//i.loli.net/2018/06/05/5b16468745b55.jpg'
+        }
+        localStorage.setItem('zzz', JSON.stringify(hash))
+      }
+      return buttonxxx
+
+    }
+    function xx(textContent) {
+      var kbdxxx = tag('kbd')
+      kbdxxx.textContent = textContent
+      kbdxxx.className = 'kbdx'
+      return kbdxxx
+
+    }
+    function creatImg(domain) {
+      var imgxxx = tag('img')
+      if (domain) {
+        imgxxx.src = 'http://' + hash[row[index2]] + '/favicon.ico'
+      }
+      else {
+        imgxxx.src = '//i.loli.net/2018/06/05/5b16468745b55.jpg'
+      }
+      imgxxx.onerror = function (yyyyyy) {
+        yyyyyy.target.src = '//i.loli.net/2018/06/05/5b16468745b55.jpg'
+      }
+      return imgxxx
+    }
+  </script>
 </body>
+
 </html>

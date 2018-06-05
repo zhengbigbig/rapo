@@ -9,9 +9,21 @@ main{
   text-align: center;
   
 }
+body{
+  background-size:cover;
+ 
+  background:#ffffff url(./sky11.jpg) no-repeat center center;
+}
 #mainxxx{
   display: inline-block;
   vertical-align: top;
+}
+.wrapper{
+  margin-top:150px;
+  background:rgba(174,201,182,0.5);
+  padding:5px 0px 15px 11px;
+  border-radius:6px;
+  min-width: 651px;
 }
 main kbd{
   border:1px solid red;
@@ -22,20 +34,46 @@ main kbd{
   text-transform: uppercase;
   font-weight:border;
   position: relative;
+  
+}
+main kbd img{
+  position: absolute;
+  width:14px;
+  height:14px;
+  top:0;
+  left:0;
 }
 
 #mainxxx div:nth-child(2){
-  margin-left:2em;
+  margin-left:-24px;
+  margin-top:15px;
 }
 #mainxxx div:nth-child(3){
-  margin-left:4em;
+  margin-left:-62px;
+  margin-top:15px;
 }
 #mainxxx kbd button{
   position:absolute;
   bottom:0px;
   right:0px;
   display: none;
+  font-size:8px;
 }
 #mainxxx kbd:hover button{
   display: inline-block;
+}
+.kbdx{
+  width:50px;
+  height:50px;
+  background: linear-gradient(to bottom,#FFFFFF 0%, #FBFBFB 22%, #F4F3F1 100%);
+  border:2px solid #ffffff;
+  border-radius: 4px;
+  box-shadow:0px 5px 0px 0px #ECEBE6,0px 8px 8px -1px rgba(0,0,0,0.75),0px 16px 8px 0px #ECEBE6;
+  display:inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size:20px;
+  font-family: Arial;
+  font-weight: normal;
+  margin-right:10px;
 }
